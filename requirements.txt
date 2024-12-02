@@ -1,0 +1,7 @@
+transformers
+torch
+opensearch-py
+PyPDF2
+gradio
+flask
+openai
