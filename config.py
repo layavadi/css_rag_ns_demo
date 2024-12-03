@@ -1,10 +1,10 @@
 import os
 
 class Config:
-    CSS_HOST = "localhost"
-    CSS_PORT = 9200
-    CSS_USERNAME = "admin"
-    CSS_PASSWORD = "admin"
+    CSS_HOST = os.getenv("CSS_HOST","localhost")
+    CSS_PORT = os.getenv("CSS_PORT",9200)
+    CSS_USERNAME = os.getenv("CSS_USERNAME","admin")
+    CSS_PASSWORD = os.getenv("CSS_PASSWORD","admin")
     DATA_FILE_PATH = os.getenv("DOC_PATH",'./data')
     CSS_OPENAI_KEY = os.getenv("CSS_OPENAI_KEY")
     CSS_OPENAI_VERSION = os.getenv("CSS_OPENAI_VERSION")
