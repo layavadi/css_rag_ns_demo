@@ -52,6 +52,7 @@ environment_variables:
 runtimes:
   - editor: PBJ Workbench
     kernel: Python 3.10
+    edition: Standard
 
 tasks:
 
