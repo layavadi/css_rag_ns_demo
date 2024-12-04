@@ -62,7 +62,7 @@ tasks:
     short_summary: Install Dependencies
     kernel: python3
     cpu: 2
-    memory: 4
+    memory: 10
 
   - type: create_job
     name: Load Data From PDF File
@@ -90,6 +90,7 @@ tasks:
   - type: start_application
     name: RAG search front end
     script: search_app.py
+    subdomain: css-demo
     short_summary: Start the RAG Demo UI
     long_summary: Start the RAG Demo UI
     cpu: 2

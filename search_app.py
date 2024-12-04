@@ -31,7 +31,11 @@ def format_results(results):
         <th>Score</th>
       </tr>
     """
-    host  = "http://127.0.0.1:5000"
+    is_cdsw_proj = os.getenv("CDSW_PROJECT")
+    if is_cdsw_proj:
+        host = f"http://css-demo.{os.getenv('CDSW_DOMAIN')}:{Config.DEMO_FILE_VIEW_UI_PORT}"
+    else:
+        host  = "http://127.0.0.1:5000"
     # Add rows to the table for each result
     for result in results:
         # Extract document name and chunk from doc_id
@@ -100,7 +104,7 @@ def get_pdf(doc_name):
 
 
 def run_flask():
-    app.run(port=5000) 
+    app.run(port=Config.DEMO_FILE_VIEW_UI_PORT) 
 
 if __name__ == "__main__":
     
@@ -113,6 +117,6 @@ if __name__ == "__main__":
 
     try:
         gradio_app = create_gradio_ui()
-        gradio_app.launch()
+        gradio_app.launch(server_port=Config.DEMO_UI_PORT)
     except Exception as e:
         print(f"Error occurred: {e}")

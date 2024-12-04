@@ -1,8 +1,12 @@
 from config import Config
+import os
 
 def query_llm(query, context):
     # Example with OpenAI GPT API
     from openai import AzureOpenAI
+
+    os.environ["AZURE_OPENAI_API_KEY"] = Config.CSS_OPENAI_KEY
+    
     azure_openai_api_version = Config.CSS_OPENAI_VERSION
     azure_openai_endpoint = Config.CSS_OPENAI_ENDPOINT
     azure_openai_deployment = Config.CSS_OPENAI_MODEL
