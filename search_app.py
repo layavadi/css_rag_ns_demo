@@ -33,7 +33,7 @@ def format_results(results):
     """
     is_cdsw_proj = os.getenv("CDSW_PROJECT")
     if is_cdsw_proj:
-        host = f"http://css-demo.{os.getenv('CDSW_DOMAIN')}:{Config.DEMO_FILE_VIEW_UI_PORT}"
+        host  = "http://127.0.0.1:5000"
     else:
         host  = "http://127.0.0.1:5000"
     # Add rows to the table for each result
@@ -104,7 +104,8 @@ def get_pdf(doc_name):
 
 
 def run_flask():
-    app.run(port=Config.DEMO_FILE_VIEW_UI_PORT) 
+    #app.run(port=Config.DEMO_FILE_VIEW_UI_PORT) 
+    app.run(port=5000) 
 
 if __name__ == "__main__":
     
@@ -117,6 +118,7 @@ if __name__ == "__main__":
 
     try:
         gradio_app = create_gradio_ui()
-        gradio_app.launch(server_port=Config.DEMO_UI_PORT)
+        #gradio_app.launch(server_port=Config.DEMO_UI_PORT)
+        gradio_app.launch(share=True)
     except Exception as e:
         print(f"Error occurred: {e}")
