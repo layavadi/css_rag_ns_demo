@@ -147,7 +147,7 @@ class OpenSearchUtils:
             print(f"Pipeline '{pipeline_id}' exists.")
             return True
         except Exception as e:
-            print(f"An error occurred: {e}")
+            print("Pipeline '{pipeline_id}' doesn't exists")
             return False
     
     # Create neural pipeline for ingesting vectors into the CSS
@@ -168,6 +168,7 @@ class OpenSearchUtils:
                 ]
             }
             self.client.ingest.put_pipeline(Config.NS_PIPELINE, body=pipeline_body)
+            print(f"Pipeline {Config.NS_PIPELINE} created")
         else:
             print(f"Pipeline {Config.NS_PIPELINE} exists")
 

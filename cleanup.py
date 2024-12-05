@@ -19,3 +19,4 @@ def cleanup():
 
 if __name__ == "__main__":
     cleanup()
+    print("Cleanup complected")
