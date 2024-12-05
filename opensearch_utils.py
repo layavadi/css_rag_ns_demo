@@ -1,6 +1,7 @@
 from opensearchpy import OpenSearch
 from config import Config
 import time
+import json
 
 class OpenSearchUtils:
 
@@ -313,3 +314,21 @@ class OpenSearchUtils:
         except Exception as e :
                 print(f"Error occurred while deploying model:{e}")
                 
+
+    def fetch_index_mapping(self,index_name: str) -> str:
+        """Fetch index mapping from OpenSearch."""
+        try:
+            mapping = self.client.indices.get_mapping(index=index_name)
+            settings = self.client.indices.get_settings(index=index_name)
+            return json.dumps(mapping, indent=4), json.dumps(settings, indent=4)
+        except Exception as e:
+            return f"Error fetching index mapping and settings: {str(e)}"
+    
+    
+    def fetch_pipeline_definition(self,pipeline_name: str) -> str:
+        """Fetch pipeline definition from OpenSearch."""
+        try:
+            pipeline = self.client.ingest.get_pipeline(id=pipeline_name)
+            return json.dumps(pipeline, indent=4)
+        except Exception as e:
+            return f"Error fetching pipeline definition: {str(e)}"

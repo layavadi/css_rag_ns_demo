@@ -76,7 +76,7 @@ tasks:
       TASK_TYPE: CREATE/RUN_JOB
 
   - type: create_job
-    name: Cleanup Inde  pipeline and Model
+    name: Cleanup Index  pipeline and Model
     entity_label: cleanup_model_index_pipeline
     script: cleanup.py
     short_summary: Job to cleanup all the data. 

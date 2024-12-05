@@ -2,11 +2,16 @@
 from opensearch_utils import OpenSearchUtils
 import gradio as gr
 import query_llm
+from config import Config
+import json
 
 
 def handle_user_query(query, client):
     #query_vector = text_to_embedding(query)
     contexts = client.search_by_neural(query)
+
+    index_mapping,index_settings = client.fetch_index_mapping(Config.INDEX_NAME)
+    pipeline_definition = client.fetch_pipeline_definition(Config.NS_PIPELINE)
 
     if not contexts:
         return "No relevant information found."
@@ -17,7 +22,7 @@ def handle_user_query(query, client):
     answer = query_llm.query_llm(query, context_text)
 
 
-    return answer,contexts
+    return answer,contexts,index_mapping,index_settings,pipeline_definition
 
 def format_results(results):
     # HTML table structure
@@ -58,10 +63,19 @@ def gradio_function(query):
     client = OpenSearchUtils()
 
     # Process the user query and return the LLM answer
-    answer, relevant_documents = handle_user_query(query, client)
+    answer, relevant_documents,index_mapping,index_settings, piepline_definition = handle_user_query(query, client)
     
     document_table = format_results(relevant_documents)
-    return answer, document_table
+
+
+    # Format outputs as HTML
+    mapping_str = f"<pre style='white-space: pre; overflow-x: auto; max-width: 100%; border: 1px solid #ddd; padding: 10px;'>{index_mapping}</pre>"
+    settings_str = f"<pre style='white-space: pre; overflow-x: auto; max-width: 100%; border: 1px solid #ddd; padding: 10px;'>{index_settings}</pre>"
+    pipeline_str = f"<pre style='white-space: pre; overflow-x: auto; max-width: 100%; border: 1px solid #ddd; padding: 10px;'>{piepline_definition}</pre>"
+
+
+    return answer, document_table,mapping_str,settings_str, pipeline_str
+
    # return answer, document_table
 
 def create_gradio_ui():
@@ -69,6 +83,19 @@ def create_gradio_ui():
         gr.Markdown("### CSS Neural Query Search RAG  DEMO  with LLM")
 
         query_input = gr.Textbox(label="Enter your query ")
+     
+        gr.Markdown("### CSS Index Details")
+
+        with gr.Row():
+            col1 = gr.Markdown("**Index Mapping**")
+            col2 = gr.Markdown("**Index Settings**")
+            col3 = gr.Markdown("**Neural Search Pipeline**")
+
+        with gr.Row():
+            index_mapping_output = gr.HTML()
+            index_settings_output = gr.HTML()
+            pipeline_output = gr.HTML()
+
         output_text = gr.Textbox(label="LLM Response")
         context_output = gr.HTML(label="Relevant Documents and Contexts")
 
@@ -78,7 +105,7 @@ def create_gradio_ui():
         query_button.click(
             fn=gradio_function,  # Function to call
             inputs=[query_input],  # Inputs to the function
-            outputs=[output_text, context_output]  # Outputs to display
+            outputs=[output_text, context_output,index_mapping_output,index_settings_output,pipeline_output]  # Outputs to display
         )
 
     return demo 
