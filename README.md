@@ -36,26 +36,34 @@ Set the following environment variables in your shell or `.env` file before runn
    Ensure your Cloudera Semantic search  server is running and accessible at the host and port specified in the environment variables.
 
 2. **Run the Script**:
-   Start the following job:
-   ```css_load.py for loading the data
+   Start the following job for loading the data:
+   ```python
+   python css_load.py 
    ```
    This will:
    - Connect to CSS
    - Process and store PDF documents from the specified directory
 
-   Start the following Application:
-   ```search_app.py for brining up the search UO
+   Start the following Application for brining up the search UI:
+   ```python
+   python search_app.py 
+   ```
+
+    RUn  the following Application to do cleanup of index , neural pipeline and model:
+   ```python
+   python clenaup.py 
    ```
    This will:
    - Connect to CSS
-   - Start both Flask and Gradio web services for handling PDF downloads and user queries, respectively
+   - Deletes index, neural pipeline, undeploys and deletes the embedding model.
 
 ## Usage
 - **Querying the System**:
    - The Gradio UI provides an interface for users to enter a query. Upon submission, it:
      1. Converts the query into a vector and searches for similar document chunks in CSS through neural search feature of CSS.
      2. Feeds the retrieved context to Azure OpenAI to generate an answer.
-     3. Displays the answer along with links to the original document chunks.
+     3. Displays the answer along with chunks  of  the original document chunks.
+     4. Displays Index settings, mappings and neural pipeline definitions used.
 
 
 
