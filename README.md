@@ -1,4 +1,4 @@
-This program processes documents in a specified location, stores them in an Cloudera Semantic Search(CSS) with vector embeddings, and enables users to query the data with a pre-trained language model, using CSS for search and retrieval and Azure OpenAI for generating responses based on the retrieved context. Embedding is generated with in CSS using Neural search pipeline feature. 
+This program processes PDF documents in a specified location, stores them in an Cloudera Semantic Search(CSS) with vector embeddings, and enables users to query the data with a pre-trained language model, using CSS for search and retrieval and Azure OpenAI for generating responses based on the retrieved context. Embedding is generated with in CSS using Neural search pipeline feature. 
 
 - **This demo needs nodes having following roles**
     - data
@@ -44,7 +44,7 @@ Set the following environment variables in your shell or `.env` file before runn
    ```
    This will:
    - Connect to CSS
-   - Process and store PDF documents from the specified directory
+   - Process and store PDF documents from the specified directory. Currently there is one Cloudera Operationa Database document in the PDF format. One can add more to the same directory.
 
    Start the following Application for brining up the search UI:
    ```python
