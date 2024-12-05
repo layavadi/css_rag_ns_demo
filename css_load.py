@@ -33,8 +33,6 @@ if __name__ == "__main__":
 
     # Convert user query to vector and search in OpenSearch
     query = "What is the procedure to ingest data in COD ?"
-    # query_vector = text_to_embedding(query)
-    # results = search_by_vector(query_vector, client, index_name)
     results = client.search_by_neural(query)
 
     # # Combine retrieved text and send to LLM

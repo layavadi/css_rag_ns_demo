@@ -1,4 +1,7 @@
-This program processes documents in a specified location, stores them in an Cloudera Semantic Search(CSS) with vector embeddings, and enables users to query the data with a pre-trained language model, using CSS for search and retrieval and Azure OpenAI for generating responses based on the retrieved context. Embedding is generated with in CSS using Neural search pipeline feature
+This program processes documents in a specified location, stores them in an Cloudera Semantic Search(CSS) with vector embeddings, and enables users to query the data with a pre-trained language model, using CSS for search and retrieval and Azure OpenAI for generating responses based on the retrieved context. Embedding is generated with in CSS using Neural search pipeline feature. This demo needs nodes having following roles
+    - data
+    - ingest
+    - ml
 
 
 ## Requirements
@@ -25,7 +28,7 @@ Set the following environment variables in your shell or `.env` file before runn
 2. **Install Dependencies**:
    Install the necessary packages by running:
    ```bash
-   pip3 install -r requirements.txt
+   pip3 install -r session-install-deps/requirements.txt
    ```
 
 ## Running the Program
@@ -54,8 +57,7 @@ Set the following environment variables in your shell or `.env` file before runn
      2. Feeds the retrieved context to Azure OpenAI to generate an answer.
      3. Displays the answer along with links to the original document chunks.
 
-- **Retrieving PDF Files**:
-   - The Flask server allows users to download PDF documents directly via links in the Gradio interface.
+
 
 
 

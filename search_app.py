@@ -1,8 +1,6 @@
-from flask import Flask, send_file, abort
+
 from opensearch_utils import OpenSearchUtils
-from config import Config
 import gradio as gr
-import os
 import query_llm
 
 
@@ -31,22 +29,18 @@ def format_results(results):
         <th>Score</th>
       </tr>
     """
-    is_cdsw_proj = os.getenv("CDSW_PROJECT")
-    if is_cdsw_proj:
-        host  = "http://127.0.0.1:5000"
-    else:
-        host  = "http://127.0.0.1:5000"
+
     # Add rows to the table for each result
     for result in results:
         # Extract document name and chunk from doc_id
         doc_name = result['document']
         chunk = result['chunk']
-        doc_url = f"{host}/get-pdf/{doc_name}"
+
         
         # Add the table row for each document
         table += f"""
         <tr>
-          <td><a href="javascript:void(0);" onclick="window.open('{doc_url}', 'popup', 'width=800,height=600');">{doc_name} (Chunk: {chunk})</a></td>
+          <td>{doc_name} (Chunk: {chunk})</td>
           <td>{result['context']}</td>
           <td>{result['score']}</td>
         </tr>
@@ -72,7 +66,7 @@ def gradio_function(query):
 
 def create_gradio_ui():
     with gr.Blocks() as demo:
-        gr.Markdown("### Query Search with LLM")
+        gr.Markdown("### CSS Neural Query Search RAG  DEMO  with LLM")
 
         query_input = gr.Textbox(label="Enter your query ")
         output_text = gr.Textbox(label="LLM Response")
@@ -89,36 +83,16 @@ def create_gradio_ui():
 
     return demo 
 
-app = Flask(__name__)
 
-# Route to serve the PDF file securely
-@app.route('/get-pdf/<doc_name>')
-def get_pdf(doc_name):
-    # Assuming your PDF files are stored in a secure directory on the server
-    pdf_path = os.path.join(Config.DATA_FILE_PATH, doc_name)
-    
-    if os.path.exists(pdf_path):
-        return send_file(pdf_path, as_attachment=False)  # Sends the PDF to the frontend
-    else:
-        abort(404)  # Return a 404 if the file is not found
-
-
-def run_flask():
-    #app.run(port=Config.DEMO_FILE_VIEW_UI_PORT) 
-    app.run(port=5000) 
 
 if __name__ == "__main__":
     
     # Connect to OpenSearch
     client = OpenSearchUtils()
 
-    import threading
-    flask_thread = threading.Thread(target=run_flask)
-    flask_thread.start()
 
     try:
         gradio_app = create_gradio_ui()
-        #gradio_app.launch(server_port=Config.DEMO_UI_PORT)
         gradio_app.launch(share=True)
     except Exception as e:
         print(f"Error occurred: {e}")

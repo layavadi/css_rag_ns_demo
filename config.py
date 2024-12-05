@@ -14,8 +14,6 @@ class Config:
     NS_PIPELINE = "neural-search-pipeline"
     CSS_EMBEDDING_MODEL = "huggingface/sentence-transformers/all-mpnet-base-v2"
     CSS_SSL = os.getenv("CSS_SSL","False")
-    DEMO_UI_PORT = int(os.getenv("CDSW_APP_PORT", "7860"))
-    DEMO_FILE_VIEW_UI_PORT = int(os.getenv("CDSW_READONLY_PORT","5000"))
     INDEX_SETTINGS = {
                 "settings": {
                     "index": {
