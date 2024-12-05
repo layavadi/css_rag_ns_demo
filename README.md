@@ -1,8 +1,9 @@
 This program processes documents in a specified location, stores them in an Cloudera Semantic Search(CSS) with vector embeddings, and enables users to query the data with a pre-trained language model, using CSS for search and retrieval and Azure OpenAI for generating responses based on the retrieved context. Embedding is generated with in CSS using Neural search pipeline feature. 
-## This demo needs nodes having following roles
-- data
-- ingest
-- ml
+
+- **This demo needs nodes having following roles**
+    - data
+    - ingest
+    - ml
 
 
 ## Requirements
@@ -13,7 +14,7 @@ This program processes documents in a specified location, stores them in an Clou
 ## Environment Variables
 Set the following environment variables in your shell or `.env` file before running the program.
 
-- **OpenSearch Connection**  
+- **CSS Connection**  
   - `CSS_HOST`: Host address of the Cloudera Semantic Search server (default: `localhost`)
   - `CSS_PORT`: Port of the OpenSearch server (default: `9200`)
   - `CSS_USER`: Username for OpenSearch authentication
