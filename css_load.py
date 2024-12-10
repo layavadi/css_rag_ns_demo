@@ -10,6 +10,9 @@ if __name__ == "__main__":
     # Connect to OpenSearch
     client = OpenSearchUtils()
 
+    # Update ML settings in the clustger 
+    client.init_ml_settings()
+    
     #register the model 
     client.registerModel()
 

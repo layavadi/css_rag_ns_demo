@@ -19,6 +19,24 @@ class OpenSearchUtils:
         except Exception as e:
             print(f"Error connecting to OpenSearch: {e}")
             self.clinet = ''
+    def init_ml_settings(self):
+        # This settings enable ML workloads to run with out any memory limit tripping.
+        try:
+            # Cluster settings payload
+            settings_payload = {
+                    "persistent": {
+                        "plugins": {
+                            "ml_commons": {
+                                "native_memory_threshold": "100",
+                                "jvm_heap_memory_threshold": "100"
+                            }
+                        }
+                    }
+                }
+            response = self.client.cluster.put_settings(body=settings_payload)
+            print("Cluster settings updated successfully!")
+        except Exception as e:
+             print(f"Error occurred: {e}")
 
     def model_exists_by_name(self, model_name):
         search_body = {
